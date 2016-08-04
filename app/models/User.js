@@ -7,6 +7,8 @@ let Schema = mongoose.Schema;
 
 let User = new Schema({
     name: {type: String, trim: true, default: null},
+    surname: {type: String, trim: true, default: null},
+    date: {type: Date, trim: true, default: null},
     email: {
         type: String,
         trim: true,
@@ -17,7 +19,7 @@ let User = new Schema({
     },
     password: {type: String, default: null, set: cryptPassword},
     accessToken: {type: String, default: null, trim: true},
-	  img: {type: String, default: null},
+	img: {type: String, default: null},
     isAdmin: {type: Boolean, default: null}
 }, {
     collection: 'users',

@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    // "start": "nodemon --exec babel-node -- -- app.js",
-    // "production.start": "pm2 start app.js --next-gen-js",
-    // "production.stop": "pm2 stop app.js --next-gen-js",
-    // "production.reload": "pm2 start app.js --next-gen-js",
-    // "deploy.dev": "pm2 deploy ecosystem.json dev",
+    "start": "nodemon --exec babel-node -- -- app.js",
+    "production.start": "npm pm2 start app.js --next-gen-js",
+    "production.stop": "pm2 stop app.js --next-gen-js",
+    "production.reload": "pm2 start app.js --next-gen-js",
+    "deploy.dev": "pm2 deploy ecosystem.json dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
