@@ -21,7 +21,12 @@
     "request": "^2.65.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.11.4",
     "babel-core": "^5.8.30",
-    "node-babel": "^0.1.2"
+    "babel-preset-es2015": "^6.9.0",
+    "mongoose": "^4.5.8",
+    "node-babel": "^0.1.2",
+    "nodemon": "^1.10.0",
+    "sha1": "^1.1.1"
   }
 }
