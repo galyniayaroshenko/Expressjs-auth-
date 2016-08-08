@@ -30,6 +30,7 @@ users.get('/logout', (req, res) => {
 users.get('/', (req, res) => {
     UserRepository.getAll(function (result) {
         res.json({users: result, status: {success: 'Ok', error: null}});
+        console.log('Smile!');
     });
 });
 

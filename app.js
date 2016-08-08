@@ -4,15 +4,16 @@ import mongoose from 'mongoose';
 import co from 'co';
 var app = express();
 
-/*var models = require('./app/models');
+// var models = require('./app/models');
+
 app.get('/', function (req, res) {
   res.send('Hello World!');
-});*/
+});
 
 import {DATABASE, PORT, JSON_SPACES, SERVERNAME} from './app/config';
-
+//
 import api from './app/controllers/api';
-
+//
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 mongoose.set('debug', true);
@@ -45,3 +46,4 @@ app.use(allowCrossDomain); //Add this
 
 app.use('/api/v1', api);
 app.listen(PORT);
+// app.listen(3000);
