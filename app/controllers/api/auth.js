@@ -9,7 +9,6 @@ var generateToken = require('../../utils').generateToken;
 let auth = express.Router();
 let UserRepository = new UserRepositoryClass();
 
-
 auth.post('/loginByEmail', (req, res) => {
     let login = req.body;
     let email = login.email;

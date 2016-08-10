@@ -58,12 +58,14 @@ users.get('/:id',  (req, res) => {
 
 
 users.post('/', (req, res) => {
-    let user = req.body.user;
+    let user = req.body;
+    let email = user.email;
+    let password = user.password;
     console.log(user);
-    if (!user.email) {
+    if (!email) {
         res.json({user: null, status: {success: null, error: 'No Email'}});
     }
-    UserRepository.getOne({email: user.email}, function (result) {
+    UserRepository.getOne({email: email}, function (result) {
         if (!result) {
             UserRepository.create(user, function (result) {
                 res.json(result);
