@@ -56,7 +56,6 @@ users.get('/:id',  (req, res) => {
 //     });
 // });
 
-
 users.post('/', (req, res) => {
     let user = req.body;
     let email = user.email;
@@ -91,92 +90,5 @@ users.delete('/:id', (req, res) => {
         res.json(result);
     });
 });
-
-
-users.post('/edit', function(req, res) {
-  if (req.method === 'POST') {
-     let busboy = new Busboy({ headers: req.headers });
-       busboy.on('field', function(fieldname, val, valTruncated, keyTruncated) {
-        if (req.body.hasOwnProperty(fieldname)) {
-          if (Array.isArray(req.body[fieldname])) {
-            req.body[fieldname].push(val);
-          } else {
-            req.body[fieldname] = [req.body[fieldname], val];
-          }
-        } else {
-          req.body[fieldname] = val;
-
-        }
-      });
-     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-       let saveTo = path.join('f:/myProgect/myProgectMusic/build/images/users/', path.basename(filename));
-       let link = '/users/' + filename;
-       let obj = {img: filename};
-       req.body.fullName = filename;
-       file.pipe(fs.createWriteStream(saveTo));
-     });
-     busboy.on('finish', function() {
-        let resArchive;
-        var obj = req.body;
-        var id = req.body._id;
-        obj.img = req.body.fullName;
-        UserRepository.getOne({_id:id}, function(result) {
-          if(result) {
-          UserRepository.update(obj, function (result) {
-                resArchive = result;
-            });
-          }
-        });
-       res.writeHead(200, { 'Connection': 'close' });
-       res.end(resArchive);
-     });
-     return req.pipe(busboy);
-   }
-   res.writeHead(404);
-   res.end();
-});
-
-
-users.post('/new', function(req, res) {
-  if (req.method === 'POST') {
-     let busboy = new Busboy({ headers: req.headers });
-       busboy.on('field', function(fieldname, val, valTruncated, keyTruncated) {
-        if (req.body.hasOwnProperty(fieldname)) {
-          if (Array.isArray(req.body[fieldname])) {
-            req.body[fieldname].push(val);
-          } else {
-            req.body[fieldname] = [req.body[fieldname], val];
-          }
-        } else {
-          req.body[fieldname] = val;
-
-        }
-      });
-     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-       let saveTo = path.join('f:/myProgect/myProgectMusic/build/images/users/', path.basename(filename));
-       let link = '/users/' + filename;
-       let obj = {img: filename};
-       req.body.fullName = filename;
-       file.pipe(fs.createWriteStream(saveTo));
-     });
-     busboy.on('finish', function() {
-        let resArchive;
-        var obj = req.body;
-        var id = req.body._id;
-        obj.img = req.body.fullName;
-          UserRepository.create(obj, function (result) {
-                resArchive = result;
-            });
-
-       res.writeHead(200, { 'Connection': 'close' });
-       res.end(resArchive);
-     });
-     return req.pipe(busboy);
-   }
-   res.writeHead(404);
-   res.end();
-});
-
-
 
 export default users;

@@ -52,27 +52,6 @@ export default class UserRepository {
             });
     }
 
-    update(obj, cb) {
-        let returnObj;
-        User.findByIdAndUpdate(obj._id, {$set: obj}, function (err) {
-            if (err) {
-                returnObj = {user: null, status: {success: null, error: err.message}};
-                cb(returnObj);
-            }
-            else {
-                User.findOne({_id: obj._id}, {}, function (err, user) {
-                    if (err) {
-                        returnObj = {user: null, status: {success: null, error: err.message}};
-                        cb(returnObj);
-                    } else {
-                        returnObj = {user: user, status: {success: 'User was updates', error: null}};
-                        cb(returnObj);
-                    }
-                });
-            }
-        });
-    }
-
     delete(id, cb) {
         let returnObj;
         User.remove({_id: id}, function (err) {
@@ -106,4 +85,4 @@ export default class UserRepository {
         });
     }
 
-}    
+}
