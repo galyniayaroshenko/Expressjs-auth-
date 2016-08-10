@@ -14,10 +14,10 @@ users.get('/logout', (req, res) => {
     {
       token = 'none';
     }
-    UserRepository.getOne({accessToken: token}, function(result) {
+    UserRepository.getOne({accessToken: token}, (result) => {
       if(result) {
         result.accessToken = null;
-        UserRepository.update(result, function(data) {
+        UserRepository.update(result, (data) => {
           res.json(data);
         });
       } else {
@@ -36,7 +36,7 @@ users.get('/', (req, res) => {
 
 users.get('/:id',  (req, res) => {
     let userId = req.params.id;
-    UserRepository.getOne({_id: userId}, function (result) {
+    UserRepository.getOne({_id: userId}, (result) => {
         res.json({user: result, status: {success: 'Ok', error: null}});
     });
 });
@@ -47,9 +47,9 @@ users.get('/:id',  (req, res) => {
 //     {
 //       accessToken = 'none';
 //     }
-//     UserRepository.getOne({accessToken: accessToken}, function (result) {
+//     UserRepository.getOne({accessToken: accessToken}, (result) => {
 //         result.accessToken = null;
-//         UserRepository.update(result, function (data) {
+//         UserRepository.update(result, (data) => {
 //           res.json({user: data, status: {success: 'ok', error: 'null'}});
 //         });
 //         res.json({user: result, status: {success: 'Ok', error: null}});
@@ -58,15 +58,15 @@ users.get('/:id',  (req, res) => {
 
 users.post('/', (req, res) => {
     let user = req.body;
-    let email = user.email;
+    let email = req.body.email;
     let password = user.password;
     console.log(user);
-    if (!email) {
+    if (!req.body.email ) {
         res.json({user: null, status: {success: null, error: 'No Email'}});
     }
-    UserRepository.getOne({email: email}, function (result) {
+    UserRepository.getOne({email: email}, (result) => {
         if (!result) {
-            UserRepository.create(user, function (result) {
+            UserRepository.create(user, (result) => {
                 res.json(result);
             });
         } else {
@@ -79,14 +79,14 @@ users.put('/:id', (req, res) => {
     let user = req.body.user;
     user._id = req.params.id;
     user.lastUpdate = new Date().getTime();
-    UserRepository.update(user, function (result) {
+    UserRepository.update(user, (result) => {
         res.json(result);
     });
 });
 
 users.delete('/:id', (req, res) => {
     let userId = req.params.id;
-    UserRepository.delete(userId, function (result) {
+    UserRepository.delete(userId, (result) => {
         res.json(result);
     });
 });

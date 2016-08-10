@@ -1,14 +1,10 @@
 var crypto = require('crypto');
 
-function getDigestHash(str) {
-    return crypto.createHash('sha256').update(str).digest('hex');
-}
+let getDigestHash = (str) => crypto.createHash('sha256').update(str).digest('hex');
 
-exports.cryptPassword = function (password) {
-    return getDigestHash(password);
-};
+exports.cryptPassword = (password) => getDigestHash(password);
 
-exports.generateToken = function (email, password) {
-    var tokenKey = email + password /*+ new Date().getTime()*/;
+exports.generateToken = (email, password) => {
+    let tokenKey = email + password /*+ new Date().getTime()*/;
     return getDigestHash(tokenKey);
 }

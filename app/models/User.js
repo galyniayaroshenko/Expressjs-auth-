@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
-var cryptPassword = require('../utils').cryptPassword;
-
+// var cryptPassword = require('../utils').cryptPassword;
+// import { generateToken } from '../utils';
+import { cryptPassword } from '../utils';
 
 let Schema = mongoose.Schema;
 
@@ -27,7 +28,7 @@ let User = new Schema({
     versionKey: false
 });
 
-User.path('email').validate(function (value) {
+User.path('email').validate((value) => {
     var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     return emailRegex.test(value);
 }, 'Please fill a valid email address');

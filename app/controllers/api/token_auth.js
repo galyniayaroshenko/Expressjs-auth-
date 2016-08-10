@@ -2,11 +2,11 @@ import User from '../../models/User';
 import UserRepositoryClass from '../../repository/UserRepository';
 let UserRepository = new UserRepositoryClass();
 
-function ensureAuth(req, res, next) {
+let ensureAuth = (req, res, next) => {
     var token = req.headers.token;
     if(token && token != null) {
 
-    UserRepository.getOne({accessToken: token}, function(result) {
+    UserRepository.getOne({accessToken: token}, (result) => {
       if (result) {
           req.user = result;
           next();

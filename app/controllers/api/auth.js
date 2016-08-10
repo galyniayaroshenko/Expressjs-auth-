@@ -13,7 +13,7 @@ auth.post('/loginByEmail', (req, res) => {
     let login = req.body;
     let email = login.email;
     let password = login.password;
-    UserRepository.loginByEmail({email: email, password: password}, function (data) {
+    UserRepository.loginByEmail({email: email, password: password}, (data) => {
         res.json(data);
     });
 });

@@ -1,13 +1,13 @@
 import co from 'co';
 import User from '../models/User';
 
-var generateToken = require('../utils').generateToken;
+import { generateToken } from '../utils';
 
 export default class UserRepository {
     getAll(cb) {
         let returnObj;
         User.find(
-            function (err, results) {
+            (err, results) => {
                 cb(results);
             }
         );
@@ -15,7 +15,7 @@ export default class UserRepository {
 
     getOne(obj, cb) {
         User.findOne(obj,
-            function (err, results) {
+            (err, results) => {
                 cb(results);
             }
         );
@@ -29,9 +29,9 @@ export default class UserRepository {
         });
 
 
-        let findUser = function (data) {
+        let findUser = (data) => {
             User.findOne({_id: data.userId},
-                function (err, results) {
+                (err, results) => {
                     if (!err) {
                         returnObj = {user: results, status: {success: 'User was created', error: null}};
                         cb(returnObj)
@@ -47,14 +47,35 @@ export default class UserRepository {
         createUser
             .
             then(findUser,
-            function (err) {
+            (err) => {
                 console.error(err.stack);
             });
     }
 
+    update(obj, cb) {
+        let returnObj;
+        User.findByIdAndUpdate(obj._id, {$set: obj}, (err) => {
+            if (err) {
+                returnObj = {user: null, status: {success: null, error: err.message}};
+                cb(returnObj);
+            }
+            else {
+                User.findOne({_id: obj._id}, {}, (err, user) => {
+                    if (err) {
+                        returnObj = {user: null, status: {success: null, error: err.message}};
+                        cb(returnObj);
+                    } else {
+                        returnObj = {user: user, status: {success: 'User was updates', error: null}};
+                        cb(returnObj);
+                    }
+                });
+            }
+        });
+    }
+
     delete(id, cb) {
         let returnObj;
-        User.remove({_id: id}, function (err) {
+        User.remove({_id: id}, (err) => {
             if (err)
                 returnObj = {user: null, status: {success: null, error: err.message}};
             else {
